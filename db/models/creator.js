@@ -24,10 +24,22 @@ module.exports = (sequelize, DataTypes) => {
         allowNull: false,
       },
       bank_account_number: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+      },
+      bank_identifer_code: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      bank_name: {
         type: DataTypes.STRING,
         allowNull: false,
       },
       residence_country: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      address: {
         type: DataTypes.STRING,
         allowNull: false,
       },

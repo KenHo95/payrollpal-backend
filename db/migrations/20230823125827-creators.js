@@ -21,12 +21,23 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
-
       bank_account_number: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+      },
+      bank_identifer_code: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      bank_name: {
         type: Sequelize.STRING,
         allowNull: false,
       },
       residence_country: {
+        type: Sequelize.STRING,
+        allowNull: false,
+      },
+      address: {
         type: Sequelize.STRING,
         allowNull: false,
       },
