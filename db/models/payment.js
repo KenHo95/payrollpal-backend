@@ -2,8 +2,8 @@
 
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Creator extends Model {}
-  Creator.init(
+  class Payment extends Model {}
+  Payment.init(
     {
       id: {
         allowNull: false,
@@ -11,36 +11,32 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      name: {
+      reference_no: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      tiktok_handle: {
+      bank_reference_no: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      email: {
+      description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      bank_account_number: {
-        type: DataTypes.BIGINT,
-        allowNull: false,
-      },
-      bank_identifer_code: {
+      status: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      bank_name: {
+      payee_currency: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      residence_country: {
-        type: DataTypes.STRING,
+      fx_rate: {
+        type: DataTypes.DECIMAL(11, 10),
         allowNull: false,
       },
-      address: {
-        type: DataTypes.STRING,
+      translated_amount: {
+        type: DataTypes.DECIMAL(11, 4),
         allowNull: false,
       },
       created_at: {
@@ -56,9 +52,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "creator",
+      modelName: "payment",
       underscored: true,
     }
   );
-  return Creator;
+  return Payment;
 };

@@ -2,43 +2,39 @@
 
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("creators", {
+    await queryInterface.createTable("payments", {
       id: {
+        allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER,
-        allowNull: false,
       },
-      name: {
+      reference_no: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      tiktok_handle: {
+      bank_reference_no: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      email: {
+      description: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      bank_account_number: {
-        type: Sequelize.BIGINT,
-        allowNull: false,
-      },
-      bank_identifer_code: {
+      status: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      bank_name: {
+      payee_currency: {
         type: Sequelize.STRING,
         allowNull: false,
       },
-      residence_country: {
-        type: Sequelize.STRING,
+      fx_rate: {
+        type: Sequelize.DECIMAL(16, 10),
         allowNull: false,
       },
-      address: {
-        type: Sequelize.STRING,
+      translated_amount: {
+        type: Sequelize.DECIMAL(11, 4),
         allowNull: false,
       },
       created_at: {
@@ -53,6 +49,6 @@ module.exports = {
   },
 
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("creators");
+    await queryInterface.dropTable("payments");
   },
 };
