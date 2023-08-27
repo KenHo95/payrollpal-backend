@@ -1,9 +1,9 @@
 const BaseController = require("./baseController");
 
-class PaymentsControllers extends BaseController {
+class PostsControllers extends BaseController {
   constructor(model) {
     super(model);
   }
 }
 
-module.exports = PaymentsControllers;
+module.exports = PostsControllers;
