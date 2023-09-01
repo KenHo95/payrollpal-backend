@@ -17,6 +17,10 @@ module.exports = {
         type: Sequelize.STRING,
         allowNull: false,
       },
+      payment_date: {
+        type: Sequelize.DATE,
+        allowNull: false,
+      },
       description: {
         type: Sequelize.STRING,
         allowNull: false,
@@ -36,6 +40,13 @@ module.exports = {
       translated_amount: {
         type: Sequelize.DECIMAL(11, 4),
         allowNull: false,
+      },
+      contract_id: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: "contracts",
+          key: "id",
+        },
       },
       created_at: {
         type: Sequelize.DATE,

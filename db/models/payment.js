@@ -2,7 +2,11 @@
 
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Payment extends Model {}
+  class Payment extends Model {
+    static associate(models) {
+      this.belongsTo(models.contract);
+    }
+  }
   Payment.init(
     {
       id: {
@@ -17,6 +21,10 @@ module.exports = (sequelize, DataTypes) => {
       },
       bank_reference_no: {
         type: DataTypes.STRING,
+        allowNull: false,
+      },
+      payment_date: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
       description: {
@@ -38,6 +46,13 @@ module.exports = (sequelize, DataTypes) => {
       translated_amount: {
         type: DataTypes.DECIMAL(11, 4),
         allowNull: false,
+      },
+      contract_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "contract",
+          key: "id",
+        },
       },
       created_at: {
         type: DataTypes.DATE,

@@ -2,12 +2,12 @@
 
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Post extends Model {
+  class Category extends Model {
     static associate(models) {
-      this.belongsTo(models.contract);
+      this.belongsToMany(models.contract, { through: "contract_categories" });
     }
   }
-  Post.init(
+  Category.init(
     {
       id: {
         allowNull: false,
@@ -44,9 +44,9 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: "post",
+      modelName: "category",
       underscored: true,
     }
   );
-  return Post;
+  return Category;
 };

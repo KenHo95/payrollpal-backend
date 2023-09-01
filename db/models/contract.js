@@ -2,17 +2,22 @@
 
 const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Creator extends Model {
+  class Contract extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.contract);
+      this.belongsTo(models.creator);
+      this.belongsToMany(models.category, {
+        through: "contract_categories",
+      });
+      this.hasOne(models.payment);
+      this.hasMany(models.post);
     }
   }
-  Creator.init(
+  Contract.init(
     {
       id: {
         allowNull: false,
@@ -20,54 +25,52 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      name: {
+      description: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      tiktok_handle: {
+      amount_sgd: {
+        type: DataTypes.DECIMAL(11, 4),
+        allowNull: false,
+      },
+      contract_status: {
         type: DataTypes.STRING,
         allowNull: false,
       },
-      email: {
-        type: DataTypes.STRING,
+      start_date: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
-      bank_account_number: {
-        type: DataTypes.BIGINT,
+      end_date: {
+        type: DataTypes.DATE,
         allowNull: false,
       },
-      bank_identifer_code: {
-        type: DataTypes.STRING,
+      no_of_post_required: {
+        type: DataTypes.INTEGER,
         allowNull: false,
       },
-      bank_name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      residence_country: {
-        type: DataTypes.STRING,
-        allowNull: false,
-      },
-      address: {
-        type: DataTypes.STRING,
+      creator_id: {
+        type: DataTypes.INTEGER,
+        references: {
+          model: "creator",
+          key: "id",
+        },
         allowNull: false,
       },
       created_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: new Date(),
       },
       updated_at: {
         type: DataTypes.DATE,
         allowNull: false,
-        defaultValue: new Date(),
       },
     },
     {
       sequelize,
-      modelName: "creator",
+      modelName: "contract",
       underscored: true,
     }
   );
-  return Creator;
+  return Contract;
 };
