@@ -8,6 +8,7 @@ class ContractsRouter {
     const router = this.express.Router();
 
     router.get("/", this.controller.getAll.bind(this.controller));
+    router.post("/", this.controller.addContract.bind(this.controller));
     return router;
   }
 }
