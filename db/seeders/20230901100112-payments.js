@@ -31,20 +31,20 @@ module.exports = {
         created_at: new Date(),
         updated_at: new Date(),
       },
-      {
-        reference_no: "PAY1236",
-        bank_reference_no: "OCBC1236",
-        payment_date: new Date(2023, 8, 27),
-        description:
-          "Seed data - Telegraphic Transfer Payment to Nana for Entertainment Post",
-        status: "Success",
-        payee_currency: "PHP",
-        fx_rate: 41.74,
-        translated_amount: 41740.0,
-        contract_id: 3,
-        created_at: new Date(),
-        updated_at: new Date(),
-      },
+      // {
+      //   reference_no: "PAY1236",
+      //   bank_reference_no: "OCBC1236",
+      //   payment_date: new Date(2023, 8, 27),
+      //   description:
+      //     "Seed data - Telegraphic Transfer Payment to Nana for Entertainment Post",
+      //   status: "Success",
+      //   payee_currency: "PHP",
+      //   fx_rate: 41.74,
+      //   translated_amount: 41740.0,
+      //   contract_id: 3,
+      //   created_at: new Date(),
+      //   updated_at: new Date(),
+      // },
     ]);
   },
 

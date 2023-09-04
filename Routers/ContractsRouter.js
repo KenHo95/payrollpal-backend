@@ -1,14 +1,21 @@
 class ContractsRouter {
-  constructor(express, controller) {
+  constructor(express, controller, checkJwt, checkScopes) {
     this.express = express;
     this.controller = controller;
+    this.checkJwt = checkJwt;
+    this.checkScopes = checkScopes;
   }
 
   routes() {
     const router = this.express.Router();
 
     router.get("/", this.controller.getAll.bind(this.controller));
-    router.post("/", this.controller.addContract.bind(this.controller));
+    router.post(
+      "/",
+      this.checkJwt,
+      this.checkScopes,
+      this.controller.addContract.bind(this.controller)
+    );
     return router;
   }
 }

@@ -30,7 +30,7 @@ module.exports = {
         description:
           "Contract with Nana for Entertainment Post - general content",
         amount_sgd: 1000.0,
-        contract_status: "Completed",
+        contract_status: "Pending Approval",
         start_date: new Date(2023, 7, 25),
         end_date: new Date(2023, 7, 27),
         no_of_post_required: 1,

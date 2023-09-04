@@ -1,7 +1,9 @@
 class CreatorsRouter {
-  constructor(express, controller) {
+  constructor(express, controller, checkJwt, checkScopes) {
     this.express = express;
     this.controller = controller;
+    this.checkJwt = checkJwt;
+    this.checkScopes = checkScopes;
   }
 
   routes() {
@@ -11,7 +13,12 @@ class CreatorsRouter {
       "/nameAndTiktokHandle",
       this.controller.getCreatorNameAndTiktokHandle.bind(this.controller)
     );
-    router.post("/", this.controller.addCreator.bind(this.controller));
+    router.post(
+      "/",
+      this.checkJwt,
+      this.checkScopes,
+      this.controller.addCreator.bind(this.controller)
+    );
     return router;
   }
 }

@@ -1,9 +1,15 @@
 const express = require("express");
 const cors = require("cors");
+const { auth, requiredScopes } = require("express-oauth2-jwt-bearer");
 require("dotenv").config();
 
-const db = require("./db/models/index");
-const { creator, payment, post, contract } = db;
+const PORT = process.env.PORT || 3000;
+const app = express();
+const checkJwt = auth({
+  audience: process.env.API_AUDIENCE,
+  issuerBaseURL: process.env.API_ISSUERBASEURL,
+});
+const checkAdminScopes = requiredScopes("write:contract");
 
 const CreatorsRouter = require("./Routers/CreatorsRouter");
 const CreatorsController = require("./Controllers/CreatorsController");
@@ -14,11 +20,16 @@ const PostsController = require("./Controllers/PostsController");
 const ContractsRouter = require("./Routers/ContractsRouter");
 const ContractsController = require("./Controllers/ContractsController");
 
-const PORT = process.env.PORT || 3000;
-const app = express();
+const db = require("./db/models/index");
+const { creator, payment, post, contract } = db;
 
 const creatorsController = new CreatorsController(creator);
-const creatorsRouter = new CreatorsRouter(express, creatorsController).routes();
+const creatorsRouter = new CreatorsRouter(
+  express,
+  creatorsController,
+  checkJwt,
+  checkAdminScopes
+).routes();
 const paymentsController = new PaymentsController(payment);
 const paymentsRouter = new PaymentsRouter(express, paymentsController).routes();
 const postsController = new PostsController(post);
@@ -26,7 +37,9 @@ const postsRouter = new PostsRouter(express, postsController).routes();
 const contractsController = new ContractsController(contract);
 const contractsRouter = new ContractsRouter(
   express,
-  contractsController
+  contractsController,
+  checkJwt,
+  checkAdminScopes
 ).routes();
 
 app.use(cors());
