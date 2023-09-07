@@ -16,7 +16,7 @@ const CreatorsRouter = require("./Routers/CreatorsRouter");
 const CreatorsController = require("./Controllers/CreatorsController");
 const PaymentsRouter = require("./Routers/PaymentsRouter");
 const PaymentsController = require("./Controllers/PaymentsController");
-const PostsRouter = require("./Routers/PaymentsRouter");
+const PostsRouter = require("./Routers/PostsRouter");
 const PostsController = require("./Controllers/PostsController");
 const ContractsRouter = require("./Routers/ContractsRouter");
 const ContractsController = require("./Controllers/ContractsController");
@@ -33,7 +33,7 @@ const creatorsRouter = new CreatorsRouter(
 ).routes();
 const paymentsController = new PaymentsController(payment);
 const paymentsRouter = new PaymentsRouter(express, paymentsController).routes();
-const postsController = new PostsController(post);
+const postsController = new PostsController(post, contract);
 const postsRouter = new PostsRouter(express, postsController).routes();
 const contractsController = new ContractsController(contract, creator);
 const contractsRouter = new ContractsRouter(
