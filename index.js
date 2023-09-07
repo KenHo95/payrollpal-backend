@@ -10,6 +10,7 @@ const checkJwt = auth({
   issuerBaseURL: process.env.API_ISSUERBASEURL,
 });
 const checkAdminScopes = requiredScopes("write:contract");
+const checkContentManagerScopes = requiredScopes("write:approve-contract");
 
 const CreatorsRouter = require("./Routers/CreatorsRouter");
 const CreatorsController = require("./Controllers/CreatorsController");
@@ -34,12 +35,13 @@ const paymentsController = new PaymentsController(payment);
 const paymentsRouter = new PaymentsRouter(express, paymentsController).routes();
 const postsController = new PostsController(post);
 const postsRouter = new PostsRouter(express, postsController).routes();
-const contractsController = new ContractsController(contract);
+const contractsController = new ContractsController(contract, creator);
 const contractsRouter = new ContractsRouter(
   express,
   contractsController,
   checkJwt,
-  checkAdminScopes
+  checkAdminScopes,
+  checkContentManagerScopes
 ).routes();
 
 app.use(cors());

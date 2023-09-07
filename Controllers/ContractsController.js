@@ -1,11 +1,42 @@
 const BaseController = require("./baseController");
 
 class ContractsController extends BaseController {
-  constructor(model) {
+  constructor(model, creatorModel) {
     super(model);
+    this.creatorModel = creatorModel;
   }
 
   // Get contracts pending approvals
+  async getCreatorContracts(req, res) {
+    const { email } = req.params;
+
+    try {
+      // get creator id
+      const creator = await this.creatorModel.findAll({
+        attributes: ["id", "name"],
+        where: {
+          email: email,
+        },
+      });
+
+      // get contracts related to retrieved creator id
+      const contracts = await this.model.findAll({
+        attributes: { exclude: ["creator_id"] },
+        where: {
+          creatorId: creator[0].id,
+          contract_status: "In Progress", // contracts that do not have all post yet
+        },
+        order: [["end_date"]], // to show contracts that are ending soon
+      });
+
+      return res.json(contracts);
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ error: true, msg: err });
+    }
+  }
+
+  // Get contracts for specfic creator
   async getContractsPendingApproval(req, res) {
     try {
       const output = await this.model.findAll({
