@@ -16,7 +16,7 @@ class ContractsRouter {
   routes() {
     const router = this.express.Router();
 
-    router.get("/", this.controller.getAll.bind(this.controller));
+    router.get("/", this.controller.getAllContracts.bind(this.controller));
     router.get(
       "/pending-approval",
       this.controller.getContractsPendingApproval.bind(this.controller)
@@ -27,8 +27,8 @@ class ContractsRouter {
     );
     router.post(
       "/",
-      // this.checkJwt,
-      // this.checkAdminScopes,
+      this.checkJwt,
+      this.checkAdminScopes,
       this.controller.addContract.bind(this.controller)
     );
     router.put(
@@ -37,6 +37,16 @@ class ContractsRouter {
       this.checkContentManagerScopes,
       this.controller.approveContract.bind(this.controller)
     );
+    // cron job for automated batch creators payment
+    router.post(
+      "/pay-approved-contracts",
+      this.controller.payApprovedContracts.bind(this.controller)
+    );
+    router.get(
+      "/monthly-contract-payment/:fiscalYear",
+      this.controller.getMthlyContractPaymentAmt.bind(this.controller)
+    );
+
     return router;
   }
 }

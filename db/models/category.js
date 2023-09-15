@@ -15,21 +15,8 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER,
       },
-      description: {
+      name: {
         type: DataTypes.STRING,
-      },
-      date: {
-        type: DataTypes.STRING,
-      },
-      post_url: {
-        type: DataTypes.INTEGER,
-      },
-      contract_id: {
-        type: DataTypes.INTEGER,
-        references: {
-          model: "contract",
-          key: "id",
-        },
       },
       createdAt: {
         type: DataTypes.DATE,
