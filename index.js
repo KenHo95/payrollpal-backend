@@ -50,7 +50,8 @@ const contractsController = new ContractsController(
   contract,
   creator,
   payment,
-  category
+  category,
+  post
 );
 const contractsRouter = new ContractsRouter(
   express,

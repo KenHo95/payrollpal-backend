@@ -3,11 +3,12 @@ const axios = require("axios");
 const sequelize = require("sequelize");
 
 class ContractsController extends BaseController {
-  constructor(model, creatorModel, paymentModel, categoryModel) {
+  constructor(model, creatorModel, paymentModel, categoryModel, postModel) {
     super(model);
     this.creatorModel = creatorModel;
     this.paymentModel = paymentModel;
     this.categoryModel = categoryModel;
+    this.postModel = postModel;
   }
 
   //////////////////////
@@ -30,7 +31,7 @@ class ContractsController extends BaseController {
           {
             model: this.creatorModel, // creator
             required: true,
-            attributes: ["name", "email"], // add column to retrieve here
+            attributes: ["name", "tiktok_handle", "email"], // add column to retrieve here
           },
           {
             model: this.categoryModel,
@@ -40,8 +41,16 @@ class ContractsController extends BaseController {
           },
           {
             model: this.paymentModel, // creator
-            // required: true,
-            attributes: ["payment_date", "translated_amount", "payee_currency"], // add column to retrieve here
+            attributes: [
+              "id",
+              "payment_date",
+              "translated_amount",
+              "payee_currency",
+            ], // add column to retrieve here
+          },
+          {
+            model: this.postModel, // post
+            attributes: ["id"],
           },
         ],
         order: [["end_date", "DESC"]],
@@ -71,6 +80,12 @@ class ContractsController extends BaseController {
       // get contracts related to retrieved creator id
       const contracts = await this.model.findAll({
         attributes: { exclude: ["creator_id"] },
+        include: [
+          {
+            model: this.postModel, // post
+            attributes: ["id"],
+          },
+        ],
         where: {
           creatorId: creator[0].id,
           contract_status: "In Progress", // contracts that do not have all post yet
@@ -102,6 +117,10 @@ class ContractsController extends BaseController {
             // required: true, // to uncomment when seeder is created
             attributes: ["name"],
             through: { attributes: [] },
+          },
+          {
+            model: this.postModel, // post
+            attributes: ["id"],
           },
         ],
         where: {

@@ -5,6 +5,24 @@ class PostsController extends BaseController {
     super(model);
     this.contractModel = contractModel;
   }
+  // Get posts for specfic contract
+  async getPostsPreview(req, res) {
+    const { selectedContract } = req.params;
+    try {
+      const postURL = await this.model.findAll({
+        attributes: ["post_url"],
+
+        where: {
+          contract_id: selectedContract,
+        },
+      });
+      return res.json(postURL);
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ error: true, msg: err });
+    }
+  }
+
   //Add post link for a contract
   async addPostLink(req, res) {
     const { postDate, description, postLink, selectedContract } = req.body;

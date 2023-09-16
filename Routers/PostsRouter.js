@@ -8,6 +8,10 @@ class PostsRouter {
     const router = this.express.Router();
 
     router.get("/", this.controller.getAll.bind(this.controller));
+    router.get(
+      "/preview/:selectedContract",
+      this.controller.getPostsPreview.bind(this.controller)
+    );
     router.post("/", this.controller.addPostLink.bind(this.controller));
     return router;
   }
