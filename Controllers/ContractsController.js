@@ -66,7 +66,7 @@ class ContractsController extends BaseController {
   // Get contracts pending approvals//
   ////////////////////////////////////
   async getCreatorContracts(req, res) {
-    const { email } = req.params;
+    const { contractStatusFilter, email } = req.params;
 
     try {
       // get creator id
@@ -77,20 +77,53 @@ class ContractsController extends BaseController {
         },
       });
 
+      let queryWhereFilter = {};
+      if (contractStatusFilter === "in-progress") {
+        queryWhereFilter = {
+          creatorId: creator[0].id,
+          contract_status: "In Progress",
+        };
+      } else {
+        queryWhereFilter = {
+          creatorId: creator[0].id,
+        };
+      }
+
       // get contracts related to retrieved creator id
       const contracts = await this.model.findAll({
         attributes: { exclude: ["creator_id"] },
         include: [
           {
+            model: this.creatorModel, // creator
+            required: true,
+            attributes: ["name", "tiktok_handle", "email"], // add column to retrieve here
+          },
+          {
+            model: this.postModel, // post
+            attributes: ["id"],
+          },
+          {
+            model: this.categoryModel,
+            // required: true, // to uncomment when seeder is created
+            attributes: ["name"],
+            through: { attributes: [] },
+          },
+          {
+            model: this.paymentModel, // creator
+            attributes: [
+              "id",
+              "payment_date",
+              "translated_amount",
+              "payee_currency",
+            ], // add column to retrieve here
+          },
+          {
             model: this.postModel, // post
             attributes: ["id"],
           },
         ],
-        where: {
-          creatorId: creator[0].id,
-          contract_status: "In Progress", // contracts that do not have all post yet
-        },
-        order: [["end_date"]], // to show contracts that are ending soon
+        where: queryWhereFilter,
+        order: [["end_date", "DESC"]], // to show contracts that are ending soon
       });
 
       return res.json(contracts);

@@ -22,7 +22,7 @@ class ContractsRouter {
       this.controller.getContractsPendingApproval.bind(this.controller)
     );
     router.get(
-      "/creator-contracts/:email",
+      "/creator-contracts/:contractStatusFilter/:email",
       this.controller.getCreatorContracts.bind(this.controller)
     );
     router.post(
