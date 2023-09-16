@@ -7,6 +7,20 @@ class CategoriesController extends BaseController {
     super(model);
     this.contractModel = contractModel;
   }
+  //////////////////////////////////
+  // create category for contracts//
+  //////////////////////////////////
+  async createCategory(req, res) {
+    const { name } = req.body;
+    try {
+      const category = await this.model.create({
+        name: name,
+      });
+      return res.json(category);
+    } catch (err) {
+      return res.status(400).json({ error: true, msg: err });
+    }
+  }
 
   /////////////////////////////////////////
   // Get Monthly Categories Contract Amt//

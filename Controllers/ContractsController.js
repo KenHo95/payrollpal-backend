@@ -126,6 +126,7 @@ class ContractsController extends BaseController {
       endDate,
       noOfPostRequired,
       creatorId,
+      selectedCategoryIds,
     } = req.body;
 
     try {
@@ -138,6 +139,16 @@ class ContractsController extends BaseController {
         no_of_post_required: noOfPostRequired,
         creator_id: creatorId,
       });
+
+      // Retrieve selected categories
+      const selectedCategories = await this.categoryModel.findAll({
+        where: {
+          id: selectedCategoryIds,
+        },
+      });
+
+      // Associate new contract with selected categories
+      await contract.setCategories(selectedCategories);
 
       return res.json(contract);
     } catch (err) {

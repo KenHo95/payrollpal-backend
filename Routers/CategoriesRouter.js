@@ -11,6 +11,8 @@ class CategoriesRouter {
       "/monthly-categories-data/:fiscalYear",
       this.controller.getMthlyCategoriesData.bind(this.controller)
     );
+    router.post("/", this.controller.createCategory.bind(this.controller));
+
     return router;
   }
 }
