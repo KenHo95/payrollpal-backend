@@ -4,7 +4,6 @@ module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert("payments", [
       {
-        id: 1,
         reference_no: "PAY1231",
         bank_reference_no: "OCBC1231",
         payment_date: "2023-01-12T16:00:00.000Z",
@@ -19,7 +18,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 2,
         reference_no: "PAY1232",
         bank_reference_no: "OCBC1232",
         payment_date: "2023-01-22T16:00:00.000Z",
@@ -34,7 +32,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 3,
         reference_no: "PAY1233",
         bank_reference_no: "OCBC1233",
         payment_date: "2023-01-26T16:00:00.000Z",
@@ -49,7 +46,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 4,
         reference_no: "PAY1234",
         bank_reference_no: "OCBC1234",
         payment_date: "2023-02-10T16:00:00.000Z",
@@ -64,7 +60,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 5,
         reference_no: "PAY1235",
         bank_reference_no: "OCBC1235",
         payment_date: "2023-02-19T16:00:00.000Z",
@@ -79,7 +74,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 6,
         reference_no: "PAY1236",
         bank_reference_no: "OCBC1236",
         payment_date: "2023-03-01T16:00:00.000Z",
@@ -94,7 +88,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 7,
         reference_no: "PAY1237",
         bank_reference_no: "OCBC1237",
         payment_date: "2023-03-10T16:00:00.000Z",
@@ -109,7 +102,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 8,
         reference_no: "PAY1238",
         bank_reference_no: "OCBC1238",
         payment_date: "2023-03-19T16:00:00.000Z",
@@ -124,7 +116,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 9,
         reference_no: "PAY1239",
         bank_reference_no: "OCBC1239",
         payment_date: "2023-03-26T16:00:00.000Z",
@@ -139,7 +130,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 10,
         reference_no: "PAY12310",
         bank_reference_no: "OCBC12310",
         payment_date: "2023-04-10T16:00:00.000Z",
@@ -154,7 +144,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 11,
         reference_no: "PAY12311",
         bank_reference_no: "OCBC12311",
         payment_date: "2023-04-19T16:00:00.000Z",
@@ -169,7 +158,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 12,
         reference_no: "PAY12312",
         bank_reference_no: "OCBC12312",
         payment_date: "2023-04-26T16:00:00.000Z",
@@ -184,7 +172,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 13,
         reference_no: "PAY12313",
         bank_reference_no: "OCBC12313",
         payment_date: "2023-05-10T16:00:00.000Z",
@@ -199,7 +186,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 14,
         reference_no: "PAY12314",
         bank_reference_no: "OCBC12314",
         payment_date: "2023-05-19T16:00:00.000Z",
@@ -214,7 +200,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 15,
         reference_no: "PAY12315",
         bank_reference_no: "OCBC12315",
         payment_date: "2023-05-26T16:00:00.000Z",
@@ -229,7 +214,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 16,
         reference_no: "PAY12316",
         bank_reference_no: "OCBC12316",
         payment_date: "2023-06-10T16:00:00.000Z",
@@ -244,7 +228,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 17,
         reference_no: "PAY12317",
         bank_reference_no: "OCBC12317",
         payment_date: "2023-06-19T16:00:00.000Z",
@@ -259,7 +242,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 18,
         reference_no: "PAY12318",
         bank_reference_no: "OCBC12318",
         payment_date: "2023-06-26T16:00:00.000Z",
@@ -274,7 +256,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 19,
         reference_no: "PAY12319",
         bank_reference_no: "OCBC12319",
         payment_date: "2023-07-10T16:00:00.000Z",
@@ -289,7 +270,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 20,
         reference_no: "PAY12320",
         bank_reference_no: "OCBC12320",
         payment_date: "2023-07-19T16:00:00.000Z",
@@ -304,7 +284,6 @@ module.exports = {
         updated_at: new Date(),
       },
       {
-        id: 21,
         reference_no: "PAY12321",
         bank_reference_no: "OCBC12321",
         payment_date: "2023-08-01T16:00:00.000Z",

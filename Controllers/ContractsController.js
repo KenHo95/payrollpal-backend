@@ -358,7 +358,7 @@ class ContractsController extends BaseController {
 
       // console.log(ocbcPaymentResponse);
       // console.log(successContractIds);
-      return res.json(payments);
+      return res.json("Success");
 
       // return res.send("Success");
     } catch (err) {
@@ -424,6 +424,149 @@ class ContractsController extends BaseController {
             required: true,
             attributes: [],
             // as: "contracts",
+          },
+        ],
+        where: sequelize.where(
+          sequelize.fn("date_part", "year", sequelize.col("payment_date")),
+          fiscalYear
+        ),
+        group: [
+          // "contract.id",
+          [
+            sequelize.fn("date_part", "month", sequelize.col("payment_date")),
+            "month",
+          ],
+        ],
+      });
+
+      const con = mthlyContactAmt.map((contract) => contract.dataValues);
+      const pay = mthlyPaymentAmt.map((contract) => contract.dataValues);
+
+      const outputData = [];
+
+      for (let i = 0; i < 12; i++) {
+        // stop loop if month has no data
+        if (!con[i] && !pay[i]) break;
+
+        const row = { ...con[i], ...pay[i] };
+        switch (row.month) {
+          case 1:
+            row.month = "Jan";
+            break;
+          case 2:
+            row.month = "Feb";
+            break;
+          case 3:
+            row.month = "Mar";
+            break;
+          case 4:
+            row.month = "Apr";
+            break;
+          case 5:
+            row.month = "May";
+            break;
+          case 6:
+            row.month = "Jun";
+            break;
+          case 7:
+            row.month = "Jul";
+            break;
+          case 8:
+            row.month = "Aug";
+            break;
+          case 9:
+            row.month = "Sep";
+            break;
+          case 10:
+            row.month = "Oct";
+            break;
+          case 11:
+            row.month = "Nov";
+            break;
+          case 12:
+            row.month = "Dec";
+            break;
+          default:
+        }
+        outputData.push(row);
+      }
+
+      return res.json(outputData);
+    } catch (err) {
+      console.log(err);
+      return res.status(400).json({ error: true, msg: err });
+    }
+  }
+
+  // get monthly contact and payment amount for current year (Creator)
+  async getMthlyCreatorContractPaymentAmt(req, res) {
+    const { fiscalYear, email } = req.params;
+
+    try {
+      // get creator id
+      const creator = await this.creatorModel.findAll({
+        attributes: ["id"],
+        where: {
+          email: email,
+        },
+      });
+
+      const creatorId = creator[0].dataValues.id;
+
+      const mthlyContactAmt = await this.model.findAll({
+        attributes: [
+          [
+            // month
+            sequelize.fn("date_part", "month", sequelize.col("start_date")),
+            "month",
+          ],
+          // sum of amount
+          [
+            sequelize.fn("sum", sequelize.col("amount_sgd")),
+            "sumContractAmount",
+          ],
+        ],
+        // },
+        where: {
+          creator_id: creatorId,
+          $and: sequelize.where(
+            sequelize.fn("date_part", "year", sequelize.col("start_date")),
+            fiscalYear
+          ),
+        },
+        group: [
+          [
+            sequelize.fn("date_part", "month", sequelize.col("start_date")),
+            "month",
+          ],
+        ],
+      });
+
+      const mthlyPaymentAmt = await this.paymentModel.findAll({
+        attributes: [
+          [
+            // month
+            sequelize.fn("date_part", "month", sequelize.col("payment_date")),
+            "month",
+          ],
+          // sum of contract amount (sgd)
+          [
+            sequelize.fn("sum", sequelize.col("contract.amount_sgd")),
+            "sumPaymentAmount",
+          ],
+        ],
+        include: [
+          {
+            model: this.model,
+            required: true,
+            attributes: [],
+            // as: "contracts",
+            include: {
+              model: this.creatorModel,
+              required: true,
+              attributes: [],
+              where: { id: creatorId },
+            },
           },
         ],
         where: sequelize.where(

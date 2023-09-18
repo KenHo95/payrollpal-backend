@@ -41,7 +41,11 @@ const creatorsRouter = new CreatorsRouter(
 // const paymentsRouter = new PaymentsRouter(express, paymentsController).routes();
 const postsController = new PostsController(post, contract);
 const postsRouter = new PostsRouter(express, postsController).routes();
-const categoriesController = new CategoriesController(category, contract);
+const categoriesController = new CategoriesController(
+  category,
+  contract,
+  creator
+);
 const categoriesRouter = new CategoriesRouter(
   express,
   categoriesController
@@ -79,25 +83,25 @@ app.listen(PORT, () => {
 // Cron to make batch payment at 830 pm every day//
 ///////////////////////////////////////////////////
 
-var CronJob = require("cron").CronJob;
+// var CronJob = require("cron").CronJob;
 
-const payApprovedContracts = async () => {
-  const res = await axios.post(
-    `http://localhost:3000/contracts/pay-approved-contracts`
-  );
+// const payApprovedContracts = async () => {
+//   const res = await axios.post(
+//     `http://localhost:3000/contracts/pay-approved-contracts`
+//   );
 
-  console.log("Success");
-  return res.data;
-};
-// implement try except
+//   console.log("Success");
+//   return res.data;
+// };
+// // implement try except
 
-var job = new CronJob(
-  "30 20 * * *", //"30 20 * * *" // "* * * * * *",
-  async function () {
-    const res = await payApprovedContracts();
-    // console.log(res);
-  },
-  null,
-  true, // starts job on creation
-  "Asia/Singapore" // "America/Los_Angeles"
-);
+// var job = new CronJob(
+//   "30 20 * * *", //"30 20 * * *" // "* * * * * *",
+//   async function () {
+//     const res = await payApprovedContracts();
+//     // console.log(res);
+//   },
+//   null,
+//   true, // starts job on creation
+//   "Asia/Singapore" // "America/Los_Angeles"
+// );

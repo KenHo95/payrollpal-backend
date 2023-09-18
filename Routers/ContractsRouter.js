@@ -46,6 +46,10 @@ class ContractsRouter {
       "/monthly-contract-payment/:fiscalYear",
       this.controller.getMthlyContractPaymentAmt.bind(this.controller)
     );
+    router.get(
+      "/monthly-contract-payment/:fiscalYear/:email",
+      this.controller.getMthlyCreatorContractPaymentAmt.bind(this.controller)
+    );
 
     return router;
   }

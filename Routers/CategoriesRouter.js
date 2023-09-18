@@ -11,6 +11,10 @@ class CategoriesRouter {
       "/monthly-categories-data/:fiscalYear",
       this.controller.getMthlyCategoriesData.bind(this.controller)
     );
+    router.get(
+      "/monthly-categories-data/:fiscalYear/:email",
+      this.controller.getCreatorMthlyCategoriesData.bind(this.controller)
+    );
     router.post("/", this.controller.createCategory.bind(this.controller));
 
     return router;
