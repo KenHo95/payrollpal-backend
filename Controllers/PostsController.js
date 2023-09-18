@@ -10,7 +10,7 @@ class PostsController extends BaseController {
     const { selectedContract } = req.params;
     try {
       const postURL = await this.model.findAll({
-        attributes: ["post_url"],
+        attributes: ["post_url", "description"],
 
         where: {
           contract_id: selectedContract,
@@ -35,7 +35,7 @@ class PostsController extends BaseController {
         contract_id: selectedContract,
       });
 
-      // get number of post for contract
+      // get number of creator post for contract
       const numPost = await this.model.findAll({
         attributes: ["id"],
         where: {
@@ -43,9 +43,19 @@ class PostsController extends BaseController {
         },
       });
 
+      // get number of required post for contract
+      const numRequiredPost = await this.contractModel.findAll({
+        attributes: ["no_of_post_required"],
+        where: {
+          id: selectedContract,
+        },
+      });
+
       let resMessage = "Post Link Submitted";
 
-      if (numPost.length === 2) {
+      if (
+        numPost.length === numRequiredPost[0].dataValues.no_of_post_required
+      ) {
         await this.contractModel.update(
           {
             contract_status: "Pending Approval",

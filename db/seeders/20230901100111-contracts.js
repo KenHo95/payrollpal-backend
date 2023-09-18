@@ -299,7 +299,7 @@ module.exports = {
         contract_status: "In Progress",
         start_date: new Date(2023, 8, 14),
         end_date: new Date(2023, 8, 15),
-        no_of_post_required: 1,
+        no_of_post_required: 2,
         creator_id: 1,
         created_at: new Date(),
         updated_at: new Date(),

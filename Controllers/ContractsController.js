@@ -1,6 +1,7 @@
 const BaseController = require("./baseController");
 const axios = require("axios");
 const sequelize = require("sequelize");
+const { Op } = require("sequelize");
 
 class ContractsController extends BaseController {
   constructor(model, creatorModel, paymentModel, categoryModel, postModel) {
@@ -86,6 +87,9 @@ class ContractsController extends BaseController {
       } else {
         queryWhereFilter = {
           creatorId: creator[0].id,
+          contract_status: {
+            [Op.not]: "In Progress",
+          }, //"In Progress",
         };
       }
 
@@ -353,7 +357,7 @@ class ContractsController extends BaseController {
       );
 
       // console.log(ocbcPaymentResponse);
-      console.log(successContractIds);
+      // console.log(successContractIds);
       return res.json(payments);
 
       // return res.send("Success");
